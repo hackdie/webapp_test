@@ -23,7 +23,7 @@ deploy:
   key: latest.zip
   bundle_type: zip
   application: NameOfTheCodeDeployApplicationNameHERE
-  deployment_group: aws-codedeploy-eu-west-1
+  deployment_group: TravisTest
   region: eu-west-1
   on: *2
 script:
