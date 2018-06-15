@@ -1,14 +1,17 @@
-FROM node:6.2.0
+# base image
+FROM node:9.6.1
 
-#setup
-RUN npm install
-CMD [ "npm","run","build" ]
-RUN mkdir -p /var/www/html/reactApp
-WORKDIR /var/www/html/reactApp
-# ENV NODE_ENV production
+# set working directory
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
 
-#copy Files
-RUN cd build/
-COPY . /var/www/html/reactApp
-EXPOSE 8080
-CMD [ "npm", "start" ]
+# add `/usr/src/app/node_modules/.bin` to $PATH
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+
+# install and cache app dependencies
+COPY package.json /usr/src/app/package.json
+RUN npm install --silent
+RUN npm install react-scripts@1.1.1 -g --silent
+
+# start app
+CMD ["npm", "start"]
